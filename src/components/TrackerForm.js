@@ -5,19 +5,30 @@ function TrackerForm() {
   return (
     <div className="form-div">
       <form className="each-form">
-        <input type="number" min={0} />
-        <input type="number" min={0} />
-        <p>Total:</p>
-        <input type="number" min={0} />
-        <input type="number" min={0} />
-        <p>Total:</p>
-        <input type="number" min={0} />
-        <input type="number" min={0} />
-        <p>Total:</p>
-        <input type="number" min={0} />
-        <input type="number" min={0} />
-        <p>Total:</p>
-        <input type="checkbox" />
+        Free Throws:
+        <div className="drill-inputs">
+          <input type="number" min={0} />
+          <input type="number" min={0} />
+          <p>Total:</p>
+        </div>
+        Spot-up:
+        <div className="drill-inputs">
+          <input type="number" min={0} />
+          <input type="number" min={0} />
+          <p>Total:</p>
+        </div>
+        Mid-range:
+        <div className="drill-inputs">
+          <input type="number" min={0} />
+          <input type="number" min={0} />
+          <p>Total:</p>
+        </div>
+        Threes:
+        <div className="drill-inputs">
+          <input type="number" min={0} />
+          <input type="number" min={0} />
+          <p>Total:</p>
+        </div>
         <p>Final Score:</p>
         <button>Submit</button>
       </form>
