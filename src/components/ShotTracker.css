@@ -19,7 +19,20 @@
 
 .drill-inputs{
     display: flex;
-    width: 60%;
+    width: 80%;
     justify-content: space-between;
     align-items: center;
+    margin: 1vh 0;
+}
+
+.titles{
+  display: inline;
+}
+
+.drill-inputs2{
+  width: 60%;
+}
+
+.drills3{
+  width: 40%;
 }
