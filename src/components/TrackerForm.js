@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import ShowScore from "./ShowScore";
 import "./ShotTracker.css";
 
 function TrackerForm() {
   const [currentPlayer, setCurrentPlayer] = useState("");
+  const [finished, setFinished] = useState(false);
   const [ftMakes, setFtMakes] = useState(0);
   const [ftMisses, setFtMisses] = useState(0);
   const [ftTotal, setFtTotal] = useState(0);
@@ -91,6 +93,10 @@ function TrackerForm() {
       setDidHustle("No");
     }
   }
+  function submitScore(e) {
+    e.preventDefault();
+    setFinished(true);
+  }
 
   let names = [
     { playerId: 1, player: "Alex" },
@@ -105,135 +111,138 @@ function TrackerForm() {
   ));
 
   return (
-    <div className="form-div">
-      <h1 className="center">
-        {currentPlayer ? `${currentPlayer}'s Score` : "Select a Player"}
-      </h1>
-      <form className="each-form">
-        <div className="drill-inputs drills3">
-          <select onChange={(e) => setCurrentPlayer(e.target.value)}>
-            <option value="">Select Player</option>
-            {names.map((name) => (
-              <div>{name.player}</div>
-            ))}
-            {nameList}
-          </select>
-          <div>
-            <label htmlFor="practice">Did Practice?</label>
-            <input type="checkbox" name="practice" id="practice" />
+    <div>
+      <ShowScore overallTotal={overallTotal} finished={finished} />
+      <div className={!finished ? "form-div" : "complete"}>
+        <h1 className="center">
+          {currentPlayer ? `${currentPlayer}'s Score` : "Select a Player"}
+        </h1>
+        <form className="each-form" onSubmit={(e) => submitScore(e)}>
+          <div className="drill-inputs drills3">
+            <select onChange={(e) => setCurrentPlayer(e.target.value)}>
+              <option value="">Select Player</option>
+              {names.map((name) => (
+                <div>{name.player}</div>
+              ))}
+              {nameList}
+            </select>
+            <div>
+              <label htmlFor="practice">Did Practice?</label>
+              <input type="checkbox" name="practice" id="practice" />
+            </div>
           </div>
-        </div>
-        <h3>Free Throws:</h3>
-        <div className="drill-inputs">
-          <div>
-            <p className="titles">Makes: </p>
-            <input
-              required
-              type="number"
-              min={0}
-              onChange={(e) => setFtMakes(e.target.value)}
-            />
+          <h3>Free Throws:</h3>
+          <div className="drill-inputs">
+            <div>
+              <p className="titles">Makes: </p>
+              <input
+                required
+                type="number"
+                min={0}
+                onChange={(e) => setFtMakes(e.target.value)}
+              />
+            </div>
+            <div>
+              <p className="titles">Misses: </p>
+              <input
+                required
+                type="number"
+                min={0}
+                onChange={(e) => setFtMisses(e.target.value)}
+              />
+            </div>
+            <p>{isNaN(ftTotal) ? "%0.0" : "%" + ftTotal.toFixed(2)}</p>
           </div>
-          <div>
-            <p className="titles">Misses: </p>
-            <input
-              required
-              type="number"
-              min={0}
-              onChange={(e) => setFtMisses(e.target.value)}
-            />
+          <h3>Spot-up:</h3>
+          <div className="drill-inputs">
+            <div>
+              <p className="titles">Makes: </p>
+              <input
+                required
+                type="number"
+                min={0}
+                onChange={(e) => setSpotMakes(e.target.value)}
+              />
+            </div>
+            <div>
+              <p className="titles">Misses: </p>
+              <input
+                required
+                type="number"
+                min={0}
+                onChange={(e) => setSpotMisses(e.target.value)}
+              />
+            </div>
+            <p>{isNaN(spotTotal) ? "%0.0" : "%" + spotTotal.toFixed(2)}</p>
           </div>
-          <p>{isNaN(ftTotal) ? "%0.0" : "%" + ftTotal.toFixed(2)}</p>
-        </div>
-        <h3>Spot-up:</h3>
-        <div className="drill-inputs">
-          <div>
-            <p className="titles">Makes: </p>
-            <input
-              required
-              type="number"
-              min={0}
-              onChange={(e) => setSpotMakes(e.target.value)}
-            />
+          <h3>Mid-range:</h3>
+          <div className="drill-inputs">
+            <div>
+              <p className="titles">Makes: </p>
+              <input
+                required
+                type="number"
+                min={0}
+                onChange={(e) => setMidMakes(e.target.value)}
+              />
+            </div>
+            <div>
+              <p className="titles">Misses: </p>
+              <input
+                required
+                type="number"
+                min={0}
+                onChange={(e) => setMidMisses(e.target.value)}
+              />
+            </div>
+            <p>{isNaN(midTotal) ? "%0.0" : "%" + midTotal.toFixed(2)}</p>
           </div>
-          <div>
-            <p className="titles">Misses: </p>
-            <input
-              required
-              type="number"
-              min={0}
-              onChange={(e) => setSpotMisses(e.target.value)}
-            />
+          <h3>Threes:</h3>
+          <div className="drill-inputs">
+            <div>
+              <p className="titles">Makes: </p>
+              <input
+                required
+                type="number"
+                min={0}
+                onChange={(e) => setThreeMakes(e.target.value)}
+              />
+            </div>
+            <div>
+              <p className="titles">Misses: </p>
+              <input
+                required
+                type="number"
+                min={0}
+                onChange={(e) => setThreeMisses(e.target.value)}
+              />
+            </div>
+            <p>{isNaN(threeTotal) ? "%0.0" : "%" + threeTotal.toFixed(2)}</p>
           </div>
-          <p>{isNaN(spotTotal) ? "%0.0" : "%" + spotTotal.toFixed(2)}</p>
-        </div>
-        <h3>Mid-range:</h3>
-        <div className="drill-inputs">
-          <div>
-            <p className="titles">Makes: </p>
-            <input
-              required
-              type="number"
-              min={0}
-              onChange={(e) => setMidMakes(e.target.value)}
-            />
+          <div className="drill-inputs drill-inputs2">
+            <div>
+              <p className="titles">Finisher: </p>
+              <input
+                required
+                type="number"
+                min={0}
+                onChange={(e) => setFinisher(e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor="hustlePts">Hustle Points</label>
+              <input
+                type="checkbox"
+                name="hustlePts"
+                id="hustlePts"
+                onChange={(e) => checkboxChanged(e)}
+              />
+            </div>
           </div>
-          <div>
-            <p className="titles">Misses: </p>
-            <input
-              required
-              type="number"
-              min={0}
-              onChange={(e) => setMidMisses(e.target.value)}
-            />
-          </div>
-          <p>{isNaN(midTotal) ? "%0.0" : "%" + midTotal.toFixed(2)}</p>
-        </div>
-        <h3>Threes:</h3>
-        <div className="drill-inputs">
-          <div>
-            <p className="titles">Makes: </p>
-            <input
-              required
-              type="number"
-              min={0}
-              onChange={(e) => setThreeMakes(e.target.value)}
-            />
-          </div>
-          <div>
-            <p className="titles">Misses: </p>
-            <input
-              required
-              type="number"
-              min={0}
-              onChange={(e) => setThreeMisses(e.target.value)}
-            />
-          </div>
-          <p>{isNaN(threeTotal) ? "%0.0" : "%" + threeTotal.toFixed(2)}</p>
-        </div>
-        <div className="drill-inputs drill-inputs2">
-          <div>
-            <p className="titles">Finisher: </p>
-            <input
-              required
-              type="number"
-              min={0}
-              onChange={(e) => setFinisher(e.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor="hustlePts">Hustle Points</label>
-            <input
-              type="checkbox"
-              name="hustlePts"
-              id="hustlePts"
-              onChange={(e) => checkboxChanged(e)}
-            />
-          </div>
-        </div>
-        <p>Running Total: %{total}</p>
-        <button>Submit</button>
-      </form>
+          <p>Running Total: %{total}</p>
+          <button className="btns">Submit</button>
+        </form>
+      </div>
     </div>
   );
 }

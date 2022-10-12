@@ -5,6 +5,18 @@
     border-radius: 10px;
 }
 
+.complete{
+  display: none;
+}
+
+.shows-finished{
+  width: 35vw;
+  height: 67vh;
+  margin-top: 10vh;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
 .center{
   text-align: center;
   align-self: center;
@@ -34,4 +46,14 @@
 
 .drills3{
   width: 40%;
+}
+
+.btns{
+  margin-bottom: 2vh;
+  padding: 1vh;
+  background-color: rgba(0, 0, 0, 0.787);
+  color: orange;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
