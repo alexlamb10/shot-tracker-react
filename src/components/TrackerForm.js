@@ -15,23 +15,82 @@ function TrackerForm() {
   const [threeMakes, setThreeMakes] = useState(0);
   const [threeMisses, setThreeMisses] = useState(0);
   const [threeTotal, setThreeTotal] = useState(0);
-  const [hustle, setHustle] = useState("No");
+  const [didHustle, setDidHustle] = useState("No");
+  const [hustle, setHustle] = useState(0);
+  const [finisher, setFinisher] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [totalPercent, setTotalPercent] = useState(0);
+  const [overallTotal, setOverallTotal] = useState(0);
 
   useEffect(() => {
-    setFtTotal((+ftMakes / (+ftMakes + +ftMisses)) * 100);
-    setSpotTotal((+spotMakes / (+spotMakes + +spotMisses)) * 100);
-    setMidTotal((+midMakes / (+midMakes + +midMisses)) * 100);
-    setThreeTotal((+threeMakes / (+threeMakes + +threeMisses)) * 100);
+    if (didHustle === "Yes") {
+      setHustle(3);
+    } else if (didHustle === "No") {
+      setHustle(0);
+    }
+    let ftDivisor = 0;
+    let spotDivisor = 0;
+    let midDivisor = 0;
+    let threeDivisor = 0;
+
+    if (!(ftMisses > 0) && !(ftMakes > 0)) {
+      ftDivisor = 1;
+    } else {
+      ftDivisor = +ftMisses + +ftMakes;
+    }
+    if (!(spotMisses > 0) && !(spotMakes > 0)) {
+      spotDivisor = 1;
+    } else {
+      spotDivisor = +spotMisses + +spotMakes;
+    }
+    if (!(midMisses > 0) && !(midMakes > 0)) {
+      midDivisor = 1;
+    } else {
+      midDivisor = +midMisses + +midMakes;
+    }
+    if (!(threeMisses > 0) && !(threeMakes > 0)) {
+      threeDivisor = 1;
+    } else {
+      threeDivisor = +threeMisses + +threeMakes;
+    }
+
+    setTotalPercent((+ftTotal + +spotTotal + +midTotal + +threeTotal) / 4);
+
+    setOverallTotal(totalPercent + +finisher + +hustle);
+
+    // @ts-ignore
+    setTotal((Math.ceil(totalPercent * 4) / 4).toFixed(2));
+
+    setFtTotal((+ftMakes / +ftDivisor) * 100);
+    setSpotTotal((+spotMakes / +spotDivisor) * 100);
+    setMidTotal((+midMakes / +midDivisor) * 100);
+    setThreeTotal((+threeMakes / +threeDivisor) * 100);
   }, [
+    didHustle,
+    finisher,
     ftMakes,
     ftMisses,
+    ftTotal,
+    hustle,
     midMakes,
     midMisses,
+    midTotal,
     spotMakes,
     spotMisses,
+    spotTotal,
     threeMakes,
     threeMisses,
+    threeTotal,
+    totalPercent,
   ]);
+
+  function checkboxChanged(e) {
+    if (e.target.checked) {
+      setDidHustle("Yes");
+    } else if (!e.target.checked) {
+      setDidHustle("No");
+    }
+  }
 
   let names = [
     { playerId: 1, player: "Alex" },
@@ -64,55 +123,73 @@ function TrackerForm() {
             <input type="checkbox" name="practice" id="practice" />
           </div>
         </div>
-        Free Throws:
+        <h3>Free Throws:</h3>
         <div className="drill-inputs">
-          <input
-            required
-            type="number"
-            min={0}
-            onChange={(e) => setFtMakes(e.target.value)}
-          />
-          <input
-            required
-            type="number"
-            min={0}
-            onChange={(e) => setFtMisses(e.target.value)}
-          />
+          <div>
+            <p className="titles">Makes: </p>
+            <input
+              required
+              type="number"
+              min={0}
+              onChange={(e) => setFtMakes(e.target.value)}
+            />
+          </div>
+          <div>
+            <p className="titles">Misses: </p>
+            <input
+              required
+              type="number"
+              min={0}
+              onChange={(e) => setFtMisses(e.target.value)}
+            />
+          </div>
           <p>{isNaN(ftTotal) ? "%0.0" : "%" + ftTotal.toFixed(2)}</p>
         </div>
-        Spot-up:
+        <h3>Spot-up:</h3>
         <div className="drill-inputs">
-          <input
-            required
-            type="number"
-            min={0}
-            onChange={(e) => setSpotMakes(e.target.value)}
-          />
-          <input
-            required
-            type="number"
-            min={0}
-            onChange={(e) => setSpotMisses(e.target.value)}
-          />
+          <div>
+            <p className="titles">Makes: </p>
+            <input
+              required
+              type="number"
+              min={0}
+              onChange={(e) => setSpotMakes(e.target.value)}
+            />
+          </div>
+          <div>
+            <p className="titles">Misses: </p>
+            <input
+              required
+              type="number"
+              min={0}
+              onChange={(e) => setSpotMisses(e.target.value)}
+            />
+          </div>
           <p>{isNaN(spotTotal) ? "%0.0" : "%" + spotTotal.toFixed(2)}</p>
         </div>
-        Mid-range:
+        <h3>Mid-range:</h3>
         <div className="drill-inputs">
-          <input
-            required
-            type="number"
-            min={0}
-            onChange={(e) => setMidMakes(e.target.value)}
-          />
-          <input
-            required
-            type="number"
-            min={0}
-            onChange={(e) => setMidMisses(e.target.value)}
-          />
+          <div>
+            <p className="titles">Makes: </p>
+            <input
+              required
+              type="number"
+              min={0}
+              onChange={(e) => setMidMakes(e.target.value)}
+            />
+          </div>
+          <div>
+            <p className="titles">Misses: </p>
+            <input
+              required
+              type="number"
+              min={0}
+              onChange={(e) => setMidMisses(e.target.value)}
+            />
+          </div>
           <p>{isNaN(midTotal) ? "%0.0" : "%" + midTotal.toFixed(2)}</p>
         </div>
-        Threes:
+        <h3>Threes:</h3>
         <div className="drill-inputs">
           <div>
             <p className="titles">Makes: </p>
@@ -141,15 +218,20 @@ function TrackerForm() {
               required
               type="number"
               min={0}
-              onChange={(e) => setThreeMakes(e.target.value)}
+              onChange={(e) => setFinisher(e.target.value)}
             />
           </div>
           <div>
-            <label htmlFor="practice">Did Practice?</label>
-            <input type="checkbox" name="practice" id="practice" />
+            <label htmlFor="hustlePts">Hustle Points</label>
+            <input
+              type="checkbox"
+              name="hustlePts"
+              id="hustlePts"
+              onChange={(e) => checkboxChanged(e)}
+            />
           </div>
         </div>
-        <p>Final Score:</p>
+        <p>Running Total:</p>
         <button>Submit</button>
       </form>
     </div>
