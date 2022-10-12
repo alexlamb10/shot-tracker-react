@@ -231,7 +231,7 @@ function TrackerForm() {
             />
           </div>
         </div>
-        <p>Running Total:</p>
+        <p>Running Total: %{total}</p>
         <button>Submit</button>
       </form>
     </div>
