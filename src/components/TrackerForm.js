@@ -104,6 +104,7 @@ function TrackerForm() {
     { playerId: 3, player: "Blake" },
     { playerId: 4, player: "Preston" },
     { playerId: 5, player: "Zack" },
+    { playerId: 6, player: "Guest" },
   ];
 
   let nameList = names.map((name) => (
@@ -112,7 +113,11 @@ function TrackerForm() {
 
   return (
     <div>
-      <ShowScore overallTotal={overallTotal} finished={finished} />
+      <ShowScore
+        overallTotal={overallTotal}
+        finished={finished}
+        currentPlayer={currentPlayer}
+      />
       <div className={!finished ? "form-div" : "complete"}>
         <h1 className="center">
           {currentPlayer ? `${currentPlayer}'s Score` : "Select a Player"}
@@ -226,6 +231,7 @@ function TrackerForm() {
                 required
                 type="number"
                 min={0}
+                max={33}
                 onChange={(e) => setFinisher(e.target.value)}
               />
             </div>
